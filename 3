@@ -1,0 +1,36 @@
+def find_checkSum(frames_list):
+    totalSum="0"
+    for i in frames_list :
+        totalSum =bin(int(totalSum,2)+int(i,2))[2:]
+    if(len(totalSum)>4):
+            totalSum=bin(int(totalSum[1:],2)+int("1",2))
+    totalSum=totalSum[2:]
+    if(len(totalSum)<4):
+        addingZeros=""
+        for i in range(4-len(totalSum)) :
+            addingZeros=addingZeros+"0"
+        totalSum=addingZeros+totalSum
+    print("Before Compliment :"+totalSum)
+    checkSum=""
+    for i in totalSum:
+        if i=="0" :
+            checkSum=checkSum+"1"
+        else :
+            checkSum=checkSum+"0"
+    return checkSum
+    
+    
+sender_message=list(input())
+frames_list=[]
+while len(sender_message)>0 :
+    if(len(sender_message)<4):
+        addingZeros=""
+        for i in range(4-len(sender_message)) :
+            addingZeros=addingZeros+"0"
+        frames_list.append(addingZeros+"".join(sender_message))
+    else :
+        frames_list.append("".join(sender_message[:4]))
+    sender_message=sender_message[4:]
+    
+checkSum=find_checkSum(frames_list)
+
