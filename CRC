@@ -1,33 +1,38 @@
 def get_remainder(data_word,gen_word) :
     
     rem=bin(int(data_word[:len(gen_word)],2)^int(gen_word,2))[2:]+data_word[len(gen_word)]
-    print(rem)
+    if(len(rem)<len(gen_word)) :
+            rem=(len(gen_word)-len(rem))*"0"+rem
+            
+   
     for i in range(1,len(data_word)-len(gen_word)+1) :
         if i!= len(data_word)-len(gen_word) :
             if rem[0]=='1' :
                 rem=bin(int(rem,2)^int(gen_word,2))[2:]+data_word[len(gen_word)+i]
-                print("if if",i,rem)
+                
             else :
                 rem=bin(int(rem,2)^int("0"*len(gen_word),2))[2:]+data_word[len(gen_word)+i] 
-                print("if else",i,rem)
+               
         else :
             if rem[0]=='1' :
                 rem=bin(int(rem,2)^int(gen_word,2))[2:]  
-                print("else if",i,rem)
+                
             else :
                 rem=bin(int(rem,2)^int("0"*len(gen_word),2))[2:]
-                print("else else",i,rem)
+                
                
         if(len(rem)<len(gen_word)) :
             rem=(len(gen_word)-len(rem))*"0"+rem
-    print(rem)
+    
     return rem
 
 def get_sending_message(data_word,gen_word) :
     temp=data_word
     data_word=data_word+((len(gen_word)-1)*"0")
     remainder=get_remainder(data_word,gen_word)
-    print(remainder)
+    
+    if remainder=="0"*len(gen_word) :
+        return temp+remainder[1:]
     return temp+remainder.lstrip("0")
 
 data_word=input("Enter sending message (Data Word) :")
