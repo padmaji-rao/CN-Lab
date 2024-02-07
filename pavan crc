@@ -1,0 +1,63 @@
+def xor(msg1,msg2):
+    res=""
+    for i in range(len(msg1)):
+        if msg1[i]==msg2[i]:
+            res+='0'
+        else:
+            res+='1'   
+    #print(res) 
+    return res
+def modulo2divison(dividend,divisor):
+    #x=dividend
+    y=divisor
+    dl=len(divisor)
+    div2=dl*'0'
+    l=len(dividend)
+    temp=0
+    i=l-dl-1   
+    x=dividend[0:len(divisor)]
+    res=""
+    
+    for i in range(l-dl-1,l):
+        if x[0]=='1':
+            temp=xor(x,divisor)
+        else:
+            temp=xor(x,div2)
+        x=temp[1:]+dividend[i] 
+        res =temp
+    if x[0]=='1':
+        temp=xor(x,divisor)
+    else:
+        temp=xor(x,div2)
+    x=temp[1:] 
+    res =x
+    return res    
+        
+    
+def scrc(data,crcpoly):
+    l=len(crcpoly)-1
+    cw=data+l*'0'
+    #print(cw)
+    
+    print("Remainder :",modulo2divison(cw,crcpoly))
+    print("CRC generator for receiver is: ",crcpoly)
+    return modulo2divison(cw,crcpoly)
+def rcrc(data,crcpoly):
+    l=len(crcpoly)-1
+    cmp=l*'0'
+    print("Remainder:",modulo2divison(data,crcpoly))
+    if modulo2divison(data,crcpoly)== cmp:
+        print("No error")
+    else:
+        print("Error in the message")
+    
+smsg=input("Enter sender message:")  
+sgen=input("Enter sender generator:")
+rem=scrc(smsg,sgen)
+rmsg=input("Enter receiver message:")
+rcrc(rmsg+rem,sgen)
+#crc("100101","1101") 
+#xor("1001","1101")
+#modulo2divison("100101100","1101")
+#scrc("100101","1101")
+#rcrc("100101100","1101")
